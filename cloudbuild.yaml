@@ -1,1 +1,32 @@
+steps:
 
+# 🔍 Security Scan
+- name: bridgecrew/checkov
+  args: ["-d", "."]
+
+# 🔧 Terraform Init DEV
+- name: hashicorp/terraform
+  dir: environments/dev
+  args: ["init"]
+
+# 📋 Terraform Plan DEV
+- name: hashicorp/terraform
+  dir: environments/dev
+  args: ["plan","-var-file=terraform.tfvars"]
+
+# 🚀 Deploy DEV
+- name: hashicorp/terraform
+  dir: environments/dev
+  args: ["apply","-var-file=terraform.tfvars","-auto-approve"]
+
+# ⏸ Simulate Approval (manual step outside)
+
+# 📋 Terraform Plan TEST
+- name: hashicorp/terraform
+  dir: environments/test
+  args: ["plan","-var-file=terraform.tfvars"]
+
+# 🚀 Deploy TEST
+- name: hashicorp/terraform
+  dir: environments/test
+  args: ["apply","-var-file=terraform.tfvars","-auto-approve"]
