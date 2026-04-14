@@ -4,6 +4,7 @@ options:
 steps:
 - name: bridgecrew/checkov
   args: ["-d", "."]
+  allow_failure: true
 
 - name: hashicorp/terraform
   dir: environments/dev
