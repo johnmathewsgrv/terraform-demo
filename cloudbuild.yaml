@@ -1,33 +1,30 @@
 options:
-  logging: LEGACY
+  logging: CLOUD_LOGGING_ONLY
 
 steps:
-
-# 🔍 Security Scan
 - name: bridgecrew/checkov
   args: ["-d", "."]
 
-# 🔧 Terraform Init DEV
 - name: hashicorp/terraform
   dir: environments/dev
-  args: ["init"]
+  args: ["init", "-upgrade"]
 
-# 📋 Terraform Plan DEV
 - name: hashicorp/terraform
   dir: environments/dev
-  args: ["plan","-var-file=terraform.tfvars"]
+  args: ["plan", "-var-file=terraform.tfvars"]
 
-# 🚀 Deploy DEV
 - name: hashicorp/terraform
   dir: environments/dev
-  args: ["apply","-var-file=terraform.tfvars","-auto-approve"]
+  args: ["apply", "-var-file=terraform.tfvars", "-auto-approve"]
 
-# 📋 Terraform Plan TEST
 - name: hashicorp/terraform
   dir: environments/test
-  args: ["plan","-var-file=terraform.tfvars"]
+  args: ["init", "-upgrade"]
 
-# 🚀 Deploy TEST
 - name: hashicorp/terraform
   dir: environments/test
-  args: ["apply","-var-file=terraform.tfvars","-auto-approve"]
+  args: ["plan", "-var-file=terraform.tfvars"]
+
+- name: hashicorp/terraform
+  dir: environments/test
+  args: ["apply", "-var-file=terraform.tfvars", "-auto-approve"]
