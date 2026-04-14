@@ -1,2 +1,9 @@
-project_id = "terraform-demo-project-492911"
-region     = "us-central1"
+variable "project_id" {
+  description = "GCP Project ID"
+  type        = string
+}
+
+variable "region" {
+  description = "GCP Region"
+  type        = string
+}
