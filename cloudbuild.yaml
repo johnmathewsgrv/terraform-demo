@@ -1,3 +1,6 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
 
 # 🔍 Security Scan
@@ -18,8 +21,6 @@ steps:
 - name: hashicorp/terraform
   dir: environments/dev
   args: ["apply","-var-file=terraform.tfvars","-auto-approve"]
-
-# ⏸ Simulate Approval (manual step outside)
 
 # 📋 Terraform Plan TEST
 - name: hashicorp/terraform
